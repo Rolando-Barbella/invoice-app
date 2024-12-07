@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView } from 'react-native';
 import { useCustomer } from '../api';
 
-const AddInvoice = ({ route }) => {
-  const { customer_id: customerId } = route.params;
+const AddInvoice = () => {
 
-  const { client, customer_id } = useCustomer();
-  // console.log({customer_id});
+  const { customer_id } = useCustomer();
 
   const [date, setDate] = useState('');
   const [deadline, setDeadline] = useState('');

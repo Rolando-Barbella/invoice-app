@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 
 
 const App = () => {
-  const { client, customer_id } = useCustomer();
+  const { customer_id } = useCustomer();
   return (
     <ApiProvider url={String(Config.API_URL)} token={String(Config.API_TOKEN)} customer_id={customer_id}>
       <NavigationContainer>
@@ -23,7 +23,7 @@ const App = () => {
                 onPress={() => navigation.navigate('AddInvoice', { customer_id })}
                 style={{ marginRight: 10 }}
               >
-                <Text>ADD - {customer_id}</Text>
+                <Text>ADD</Text>
               </TouchableOpacity>
             )
           })} />
