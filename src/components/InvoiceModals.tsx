@@ -33,6 +33,7 @@ const InvoiceModals: React.FC<InvoiceModalsProps> = ({
         <Pressable 
           style={styles.modalOverlay}
           onPress={onCloseMenu}
+          testID="modalOverlay"
         >
           <View style={[
             styles.menuContainer,

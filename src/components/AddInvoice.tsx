@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView } from 'react-native';
+import { Text, TextInput, StyleSheet, Alert, ScrollView, TouchableOpacity } from 'react-native';
 import { useCustomer } from '../api';
 
 const AddInvoice = () => {
@@ -74,8 +74,6 @@ const AddInvoice = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Create Invoice</Text>
-
       <TextInput
         style={styles.input}
         placeholder="Date (YYYY-MM-DD)"
@@ -128,11 +126,15 @@ const AddInvoice = () => {
         onChangeText={setTax}
       />
 
-      <Button
-        title={loading ? 'Creating...' : 'Create Invoice'}
+      <TouchableOpacity
+        style={styles.button}
         onPress={handleCreateInvoice}
         disabled={loading}
-      />
+      >
+        <Text style={styles.buttonText}>
+          {loading ? 'Creating...' : 'Create Invoice'}
+        </Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -155,6 +157,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 4,
+  },
+  button: {
+    width: '100%',
+    backgroundColor: '#007AFF', // iOS blue color
+    padding: 15,
+    borderRadius: 8,
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
