@@ -1,92 +1,37 @@
-# Jean Test Mobile
+# Invoices App
 
-This repository contains instructions for the React Native hiring test, as well as a bootstrapped React Native app with which to start.
+A mobile app that shows, updates and deletes invoices
 
-## Your mission
-
-> ***Implement an invoicing app with React Native***
-
-### Objectives
-
-The goal is to leverage an existing REST HTTP API to build the prototype of an invoicing app.
-
-This prototype allows users to perform simple actions around their invoices:
-- List existing invoices with relevant details
-- Create new invoices
-- Manage existing invoices
-  - Finalize invoices
-  - Delete invoices
-
-We do not expect the prototype to be feature-rich as we'll mainly focus on code quality, performance & user experience.
-We expect you to adopt standard coding practices & setup, including testing, as if you were working on a real application with other coworkers.
-
-Feel free to use pre-installed dependencies or add new ones if you have a legitimate use of them.
-
-Please take the time to identify advanced features that could be added in the future & write down tech improvements/ideas you could work on.
-
-For each feature/tech improvement, we want to understand:
-- What led you to think about this
-- Why it would be useful
-- What might be missing for you to implement it (API limitations, technical constraints)
-
-### Deliverable
-
-- Create a private GitHub repository containing the source code of your application
-- Invite the following GitHub users to it: `@julienpinquie` `@soyoh` `@LucaGaspa` `@greeeg` 
-
-## What you're working with
-
-Please note that we rely on [`asdf`](https://github.com/asdf-vm/asdf) to manage Ruby/Node/Yarn versions. Feel free to use something else & have a look at `.tool-versions` if you run in any trouble.
 
 ### Getting started
 
 ```sh
-git clone git@github.com:pennylane-hq/jean_test_mobile.git
-
-cd jean_test_mobile
-
 bin/pull
 
-# Make sure to add your token (sent by email)
+# Make sure to add your token
 cp .env.example .env
+
+yarn
 
 yarn start
 
-yarn ios
+a - run on Android
+i - run on iOS
+
 ```
 
-### Data model
+## Some key feature/tech improvements that can be done
 
-The REST API contains 4 resources: customers, products, invoices & invoice lines.
+- As it is now, when the app has a small number of invoices (10 - 20), it works fine. If more than that, it would be nice to implement some sort of "pagination" logic that makes the API call invoices per batch ( exp: 10 each ) when scrolling down for performance purposes
+- It would be nice to have a way of filtering invoices by invoice number and by date as well
+- When adding invoices, specifically the date fields, the screen could have a calendar component that helps the user select and add dates more "easily"
+- The form validaton is somehow "basic", could be better
+- An invoice details screen that shows all details could be added to offer full data information to the user
+- More test coverage could be added
+- Sure it can be styled to look more attractive and moderm
 
-Side notes:
-- Invoices contain multiple invoice lines.
-- Invoice lines are accessed via their invoice. To update them, use the relevant invoice API endpoints.
-- Once the `finalized` field is set to `true` for invoices, no field may be modified except for `paid`.
+## What might be missing for you to implement it (API limitations, technical constraints)
 
-The REST API base URL is `https://jean-test-api.herokuapp.com/`.
-Each API call must be authenticated using a `X-SESSION` header with the provided token.
+I could not properly figutate out the invoice post api call, no matter what I tried, it created the invoice without invoice_lines, I'm also not clear wich are the must parameters to pass or not, the swagger page could do a better job explaning this
 
-An OpenAPI definition for this REST API is avaible [here](https://jean-test-api.herokuapp.com/api-docs/index.html).
 
-The invoices list endpoint supports a `filter` query param which can be used as described in [our external API documentation](https://pennylane.readme.io/docs/how-to-set-up-filters).
-
-### API client
-
-An API client based on `openapi-client-axios` is available through a React Context set up in `src/api/index.tsx`. The provider is mounted in `src/App.tsx` & the context can be consumed using the `useApi` hook from `src/api/index.tsx`.
-
-```tsx
-const MyComponent = () => {
-  const apiClient = useApi()
-
-  useEffect(() => {
-    apiClient.getInvoices().then(res => {
-      // Do something...
-    })
-  }, [apiClient])
-
-  return null
-}
-```
-## TODO
-- API helper
