@@ -4,12 +4,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ApiProvider, useCustomer } from './api'
 import Config from 'react-native-config'
-import InvoiceFetcher from './components/InvoiceFetcher';
-import AddInvoice from './components/AddInvoice';
-import { Text, TouchableOpacity } from 'react-native';
+import InvoiceFetcher from './screens/InvoiceFetcher.';
+import AddInvoice from './screens/AddInvoice';
+import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const Stack = createNativeStackNavigator();
-
 
 const App = () => {
   const { customer_id } = useCustomer();
@@ -23,15 +22,20 @@ const App = () => {
                 onPress={() => navigation.navigate('AddInvoice', { customer_id })}
                 style={{ marginRight: 10 }}
               >
-                <Text>ADD</Text>
+                <Text style={styles.addText}>ADD</Text>
               </TouchableOpacity>
             )
           })} />
-          <Stack.Screen name="AddInvoice" component={AddInvoice} />
+          <Stack.Screen name="AddInvoice" component={AddInvoice} options={{ title: 'Add Invoice' }} />
         </Stack.Navigator>
       </NavigationContainer>
     </ApiProvider>
   )
 }
-
+const styles = StyleSheet.create({
+  addText: {
+    fontSize: 18, 
+    color: '#0090ff'
+  },
+});
 export default App

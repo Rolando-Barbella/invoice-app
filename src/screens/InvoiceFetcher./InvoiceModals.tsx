@@ -7,7 +7,7 @@ interface InvoiceModalsProps {
   menuPosition: { top: number; right: number };
   selectedInvoice: any;
   onCloseMenu: () => void;
-  onMenuOption: (action: string) => void;
+  onMenuOption: (action: 'finalize' | 'delete') => void;
   onCloseDeleteConfirm: () => void;
   onConfirmDelete: () => void;
 }

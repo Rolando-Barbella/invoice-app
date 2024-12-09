@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import InvoiceCard from '../InvoiceCard';
+import InvoiceCard from '../InvoiceFetcher./InvoiceCard';
 
 describe('InvoiceCard', () => {
   const mockInvoice = {
@@ -13,7 +13,9 @@ describe('InvoiceCard', () => {
     paid: false,
     date: '2023-12-01',
     deadline: '2023-12-10',
-    total: 123.45,
+    total: '123.45',
+    customer_id: 2, 
+    tax: '0.05'
   };
 
   const mockOnMenuPress = jest.fn();

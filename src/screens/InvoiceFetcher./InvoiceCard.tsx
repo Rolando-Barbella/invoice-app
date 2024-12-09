@@ -3,15 +3,17 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 interface Invoice {
   id: number;
-  customer: {
+  customer_id: number | null;
+  finalized: boolean;
+  paid: boolean;
+  date: string | null;
+  deadline: string | null;
+  total: string | null;
+  tax: string | null;
+  customer?: {
     first_name: string;
     last_name: string;
   };
-  finalized: boolean;
-  paid: boolean;
-  date: string;
-  deadline: string;
-  total: number;
 }
 
 interface InvoiceCardProps {
@@ -31,7 +33,7 @@ const InvoiceCard = ({ invoice, onMenuPress }: InvoiceCardProps) => {
           <Text style={styles.menuDots}>⋮</Text>
         </TouchableOpacity>
       </View>
-      <Text>Customer: {invoice.customer.first_name} {invoice.customer.last_name}</Text>
+      <Text>Customer: {invoice.customer?.first_name} {invoice.customer?.last_name}</Text>
       <Text>Finalized: {invoice.finalized ? 'Yes' : 'No'}</Text>
       <Text>Paid: {invoice.paid ? 'Yes' : 'No'}</Text>
       <Text>Date: {invoice.date}</Text>

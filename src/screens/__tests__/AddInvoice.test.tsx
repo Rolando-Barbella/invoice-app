@@ -5,9 +5,7 @@ import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import AddInvoice from '../AddInvoice';
 import { useCustomer, useCreateInvoice } from '../../api';
-
-
-let setImmediate
+import { act } from 'react-test-renderer';
 
 jest.mock('../../api', () => ({
   useCustomer: jest.fn(),
@@ -116,7 +114,7 @@ describe('AddInvoice', () => {
 
     fireEvent.press(getByText('Create Invoice'));
 
-    await waitFor(() => {
+    await act(() => {
       expect(mockCreateInvoice).toHaveBeenCalled();
     });
   });

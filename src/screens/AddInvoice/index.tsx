@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Text, TextInput, StyleSheet, Alert, ScrollView, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
-import { useCustomer, useCreateInvoice } from '../api';
+import { useCustomer, useCreateInvoice } from '../../api';
 
 const AddInvoice = () => {
-
   const { customer_id } = useCustomer();
   const { createInvoice } = useCreateInvoice();
 

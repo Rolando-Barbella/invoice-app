@@ -1,22 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, FlatList } from 'react-native';
-import { useApi, useCustomer, useFinalizeInvoice, useDeleteInvoice } from '../api';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ActivityIndicator, FlatList, GestureResponderEvent } from 'react-native';
+import { useApi, useCustomer, useFinalizeInvoice, useDeleteInvoice } from '../../api';
 import InvoiceCard from './InvoiceCard';
 import InvoiceModals from './InvoiceModals';
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 
+interface Invoice {
+  id: number;
+  customer_id: number | null;
+  finalized: boolean;
+  paid: boolean;
+  date: string | null;
+  deadline: string | null;
+  total: string | null;
+  tax: string | null;
+  customer?: {
+    first_name: string;
+    last_name: string;
+  };
+}
+
 const InvoiceFetcher = () => {
-  const [invoices, setInvoices] = useState([]);
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [menuVisible, setMenuVisible] = useState(false);
-  const [selectedInvoice, setSelectedInvoice] = useState(null);
-  const [menuPosition, setMenuPosition] = useState({ top: 0, right: 0 });
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [menuVisible, setMenuVisible] = useState<boolean>(false);
+  const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
+  const [menuPosition, setMenuPosition] = useState<{ top: number; right: number }>({ top: 0, right: 0 });
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState<boolean>(false);
 
   const apiClient = useApi();
-  const { setCustomerId, customer_id } = useCustomer();
+  const { setCustomerId } = useCustomer();
   const { finalizeInvoice } = useFinalizeInvoice();
   const { deleteInvoice } = useDeleteInvoice();
 
@@ -26,7 +41,7 @@ const InvoiceFetcher = () => {
       .then(res => {
         setInvoices(res.data.invoices || []);
         if (res.data.invoices?.[0]?.customer_id) {
-          setCustomerId(res.data.invoices[0].customer_id);
+          setCustomerId(res.data.invoices[0].customer_id.toString());
         }
         setLoading(false);
       })
@@ -42,23 +57,25 @@ const InvoiceFetcher = () => {
     }, [fetchInvoices])
   );
 
-  const openMenu = (invoice, event) => {
-    const { pageY, pageX } = event.nativeEvent;
+  const openMenu = (invoice: Invoice, event: GestureResponderEvent) => {
+    const { pageY } = event.nativeEvent;
     setMenuPosition({ 
-      top: pageY - 10, // Adjust these offsets as needed
+      top: pageY - 10,
       right: 20,
     });
     setSelectedInvoice(invoice);
     setMenuVisible(true);
   };
 
-  const handleMenuOption = async (action) => {
+  const handleMenuOption = async (action: 'finalize' | 'delete') => {
     if (action === 'finalize') {
       try {
-        await finalizeInvoice(selectedInvoice.id);
-        const res = await apiClient.getInvoices();
-        setInvoices(res.data.invoices || []);
-      } catch (err) {
+        if (selectedInvoice) {
+          await finalizeInvoice(selectedInvoice.id);
+          const res = await apiClient.getInvoices();
+          setInvoices(res.data.invoices || []);
+        }
+      } catch (err: any) {
         setError(err.message);
       }
     } else if (action === 'delete') {
@@ -70,11 +87,11 @@ const InvoiceFetcher = () => {
   const handleConfirmDelete = async () => {
     try {
       setLoading(true)
-      await deleteInvoice(selectedInvoice.id);
+      await deleteInvoice(selectedInvoice?.id as number);
       const res = await apiClient.getInvoices();
       setInvoices(res.data.invoices || []);
       setLoading(false)
-    } catch (err) {
+    } catch (err: any) {
       setLoading(false)
       setError(err.message);
     }
@@ -93,7 +110,7 @@ const InvoiceFetcher = () => {
   if (error) {
     return (
       <View style={styles.center}>
-        <Text style={styles.errorText}>Error: {error}</Text>
+        <Text style={styles.errorText}>Error: {error || ''}</Text>
       </View>
     );
   }
