@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react'
-import { ApiProvider, useApi, useCustomer, useFinalizeInvoice, useDeleteInvoice } from './index'
+import { ApiProvider, useApi, useCustomer, useFinalizeInvoice, useDeleteInvoice, useCreateInvoice } from './index'
 import React from 'react'
 import OpenAPIClientAxios from 'openapi-client-axios'
 
@@ -7,6 +7,7 @@ interface Client {
   put: (url: string, data?: any) => Promise<any>;
   delete: (url: string) => Promise<any>;
   getInvoices: () => Promise<any>;
+  post: (url: string, data?: any) => Promise<any>;
 }
 
 // Define mockClient first
@@ -14,10 +15,12 @@ const mockClient = {
   put: jest.fn().mockImplementation(),
   delete: jest.fn().mockImplementation(),
   getInvoices: jest.fn().mockImplementation(),
+  post: jest.fn().mockImplementation(),
 } as unknown as Client & {
   put: jest.MockedFunction<any>;
   delete: jest.MockedFunction<any>;
   getInvoices: jest.MockedFunction<any>;
+  post: jest.MockedFunction<any>;
 }
 
 // Mock OpenAPIClientAxios
@@ -97,4 +100,31 @@ describe('API Hooks', () => {
       await expect(result.current.deleteInvoice(123)).rejects.toThrow('Failed to delete invoice: Error: Delete failed')
     })
   })
+
+  describe('useCreateInvoice', () => {
+    it('should create invoice successfully', async () => {
+      const mockInvoiceData = { customer_id: '123', amount: 100 };
+      const mockResponse = { data: { id: 1, ...mockInvoiceData } };
+      mockClient.post.mockResolvedValueOnce(mockResponse);
+      
+      const { result } = renderHook(() => useCreateInvoice(), { wrapper });
+
+      await act(async () => {
+        const response = await result.current.createInvoice(mockInvoiceData);
+        expect(response).toEqual(mockResponse.data);
+      });
+
+      expect(mockClient.post).toHaveBeenCalledWith('/invoices', mockInvoiceData);
+    });
+
+    it('should handle create invoice error', async () => {
+      const mockInvoiceData = { customer_id: '123', amount: 100 };
+      mockClient.post.mockRejectedValueOnce(new Error('Create failed'));
+
+      const { result } = renderHook(() => useCreateInvoice(), { wrapper });
+
+      await expect(result.current.createInvoice(mockInvoiceData))
+        .rejects.toThrow('Failed to create invoice: Error: Create failed');
+    });
+  });
 }) 

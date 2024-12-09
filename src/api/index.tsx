@@ -104,3 +104,18 @@ export const useDeleteInvoice = () => {
 
   return { deleteInvoice };
 };
+
+export const useCreateInvoice = () => {
+  const client = useApi();
+
+  const createInvoice = async (invoiceData: any) => {
+    try {
+      const response = await client.post('/invoices', invoiceData);
+      return response.data;
+    } catch (error) {
+      throw new Error(`Failed to create invoice: ${error}`);
+    }
+  };
+
+  return { createInvoice };
+};

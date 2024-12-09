@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, ActivityIndicator, FlatList } from 'react-nativ
 import { useApi, useCustomer, useFinalizeInvoice, useDeleteInvoice } from '../api';
 import InvoiceCard from './InvoiceCard';
 import InvoiceModals from './InvoiceModals';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 const InvoiceFetcher = () => {
   const [invoices, setInvoices] = useState([]);
@@ -18,7 +20,8 @@ const InvoiceFetcher = () => {
   const { finalizeInvoice } = useFinalizeInvoice();
   const { deleteInvoice } = useDeleteInvoice();
 
-  useEffect(() => {
+  const fetchInvoices = useCallback(() => {
+    setLoading(true);
     apiClient.getInvoices()
       .then(res => {
         setInvoices(res.data.invoices || []);
@@ -31,8 +34,13 @@ const InvoiceFetcher = () => {
         setError(err.message);
         setLoading(false);
       });
-
   }, [apiClient, setCustomerId]);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchInvoices();
+    }, [fetchInvoices])
+  );
 
   const openMenu = (invoice, event) => {
     const { pageY, pageX } = event.nativeEvent;
