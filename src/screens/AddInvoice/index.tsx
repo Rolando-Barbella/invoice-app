@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { StyleSheet, Alert, ScrollView, KeyboardAvoidingView, Platform, Text } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import { useCustomer, useCreateInvoice } from '../../api';
 
@@ -220,7 +220,7 @@ const AddInvoice = () => {
           error={dateError.length > 1}
           onChangeText={handleDateChange}
         />
-
+        {dateError ? <Text style={styles.errorText}>{dateError}</Text> : null}
         <TextInput
           style={styles.input}
           placeholder="Deadline (YYYY-MM-DD)"
@@ -228,7 +228,7 @@ const AddInvoice = () => {
           onChangeText={handleDeadlineChange}
           error={deadlineError.length > 1}
         />
-
+        {deadlineError ? <Text style={styles.errorText}>{deadlineError}</Text> : null}
         <TextInput
           style={styles.input}
           placeholder="Product Label"
@@ -236,7 +236,7 @@ const AddInvoice = () => {
           onChangeText={handleProductLabelChange}
           error={productLabelError.length > 1}
         />
-
+       {productLabelError ? <Text style={styles.errorText}>{productLabelError}</Text> : null}
         <TextInput
           style={styles.input}
           placeholder="Quantity"
@@ -245,7 +245,7 @@ const AddInvoice = () => {
           onChangeText={handleQuantityChange}
           error={quantityError.length > 1}
         />
-
+        {quantityError ? <Text style={styles.errorText}>{quantityError}</Text> : null}
         <TextInput
           style={styles.input}
           placeholder="Unit (e.g., hour)"
@@ -253,7 +253,7 @@ const AddInvoice = () => {
           onChangeText={handleUnitChange}
           error={unitError.length > 1}
         />
-
+        {unitError ? <Text style={styles.errorText}>{unitError}</Text> : null}
         <TextInput
           style={styles.input}
           placeholder="Price"
@@ -262,7 +262,7 @@ const AddInvoice = () => {
           onChangeText={handlePriceChange}
           error={priceError.length > 1}
         />
-
+        {priceError ? <Text style={styles.errorText}>{priceError}</Text> : null}
         <TextInput
           style={styles.input}
           placeholder="Tax"
@@ -271,7 +271,7 @@ const AddInvoice = () => {
           onChangeText={handleTaxChange}
           error={taxError.length > 1}
         />
-
+        {taxError ? <Text style={styles.errorText}>{taxError}</Text> : null}
         <Button onPress={handleCreateInvoice}
           mode="contained"
           style={[styles.button, loading ? styles.buttonDisabled : null]}
@@ -311,6 +311,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignItems: 'center',
     color: 'white',
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    marginTop: -4,
+    marginBottom: 4,
+    alignSelf: 'flex-start',
   },
   buttonDisabled: {
     opacity: 0.5,

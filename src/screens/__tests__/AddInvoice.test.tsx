@@ -18,7 +18,6 @@ describe('AddInvoice', () => {
   const mockCustomerId = '123';
 
   beforeEach(() => {
-    // Reset mocks before each test
     jest.clearAllMocks();
     
     (useCustomer as jest.Mock).mockReturnValue({ customer_id: mockCustomerId });
@@ -38,7 +37,7 @@ describe('AddInvoice', () => {
   });
 
   it('shows validation errors for empty fields', () => {
-    const { getByText, getByPlaceholderText } = render(<AddInvoice />);
+    const { getByText } = render(<AddInvoice />);
     
     fireEvent.press(getByText('Create Invoice'));
 
