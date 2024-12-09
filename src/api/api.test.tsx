@@ -1,7 +1,6 @@
 import { renderHook, act } from '@testing-library/react'
-import { ApiProvider, useApi, useCustomer, useFinalizeInvoice, useDeleteInvoice, useCreateInvoice } from './index'
+import { ApiProvider, useCustomer, useFinalizeInvoice, useDeleteInvoice, useCreateInvoice } from './index'
 import React from 'react'
-import OpenAPIClientAxios from 'openapi-client-axios'
 
 interface Client {
   put: (url: string, data?: any) => Promise<any>;
@@ -10,7 +9,6 @@ interface Client {
   post: (url: string, data?: any) => Promise<any>;
 }
 
-// Define mockClient first
 const mockClient = {
   put: jest.fn().mockImplementation(),
   delete: jest.fn().mockImplementation(),
@@ -23,14 +21,12 @@ const mockClient = {
   post: jest.MockedFunction<any>;
 }
 
-// Mock OpenAPIClientAxios
 jest.mock('openapi-client-axios', () => {
   return jest.fn().mockImplementation(() => ({
     initSync: jest.fn().mockReturnValue(mockClient)
   }))
 })
 
-// Mock the client module
 jest.mock('./generated/client.d.ts', () => ({
   Client: jest.fn().mockImplementation(() => mockClient)
 }))

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import InvoiceCard from '../InvoiceFetcher./InvoiceCard';
+import InvoiceCard from '../InvoiceFetcher/InvoiceCard';
 
 describe('InvoiceCard', () => {
   const mockInvoice = {
