@@ -18,6 +18,9 @@ yarn start
 a - run on Android
 i - run on iOS
 
+# To run tests
+npm test
+
 ```
 
 ## Some key feature/tech improvements that can be done
@@ -33,6 +36,8 @@ i - run on iOS
 ## What might be missing for you to implement it (API limitations, technical constraints)
 
 - I could not properly figutate out the invoice post api call, no matter what I tried, it created the invoice without invoice_lines, I'm also not clear wich are the must parameters to pass or not, the swagger page could do a better job explaning this
+
+- There is a unit test warning that needs to be tackle
 
 - I could not find any of this accounts when trying to invite collaborators: @julienpinquie @soyoh @LucaGaspa @greeeg
 
