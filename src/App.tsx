@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ApiProvider, useCustomer } from './api'
 import Config from 'react-native-config'
-import InvoiceFetcher from './screens/InvoiceFetcher';
+import InvoiceFetcher from './screens/InvoiceList';
 import AddInvoice from './screens/AddInvoice';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 

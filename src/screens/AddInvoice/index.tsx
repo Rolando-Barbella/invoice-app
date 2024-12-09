@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Text, TextInput, StyleSheet, Alert, ScrollView, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { StyleSheet, Alert, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { Button, TextInput } from 'react-native-paper';
 import { useCustomer, useCreateInvoice } from '../../api';
 
 const AddInvoice = () => {
@@ -208,79 +209,77 @@ const AddInvoice = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
     >
-      <ScrollView 
+      <ScrollView
         contentContainerStyle={styles.container}
         keyboardShouldPersistTaps="handled"
       >
         <TextInput
-          style={[styles.input, dateError ? styles.inputError : null]}
+          style={styles.input}
           placeholder="Date (YYYY-MM-DD)"
           value={date}
+          error={dateError.length > 1}
           onChangeText={handleDateChange}
         />
-        {dateError ? <Text style={styles.errorText}>{dateError}</Text> : null}
 
         <TextInput
-          style={[styles.input, deadlineError ? styles.inputError : null]}
+          style={styles.input}
           placeholder="Deadline (YYYY-MM-DD)"
           value={deadline}
           onChangeText={handleDeadlineChange}
+          error={deadlineError.length > 1}
         />
-        {deadlineError ? <Text style={styles.errorText}>{deadlineError}</Text> : null}
 
         <TextInput
-          style={[styles.input, productLabelError ? styles.inputError : null]}
+          style={styles.input}
           placeholder="Product Label"
           value={productLabel}
           onChangeText={handleProductLabelChange}
+          error={productLabelError.length > 1}
         />
-        {productLabelError ? <Text style={styles.errorText}>{productLabelError}</Text> : null}
 
         <TextInput
-          style={[styles.input, quantityError ? styles.inputError : null]}
+          style={styles.input}
           placeholder="Quantity"
           keyboardType="numeric"
           value={quantity}
           onChangeText={handleQuantityChange}
+          error={quantityError.length > 1}
         />
-        {quantityError ? <Text style={styles.errorText}>{quantityError}</Text> : null}
 
         <TextInput
-          style={[styles.input, unitError ? styles.inputError : null]}
+          style={styles.input}
           placeholder="Unit (e.g., hour)"
           value={unit}
           onChangeText={handleUnitChange}
+          error={unitError.length > 1}
         />
-        {unitError ? <Text style={styles.errorText}>{unitError}</Text> : null}
 
         <TextInput
-          style={[styles.input, priceError ? styles.inputError : null]}
+          style={styles.input}
           placeholder="Price"
           keyboardType="numeric"
           value={price}
           onChangeText={handlePriceChange}
+          error={priceError.length > 1}
         />
-        {priceError ? <Text style={styles.errorText}>{priceError}</Text> : null}
 
         <TextInput
-          style={[styles.input, taxError ? styles.inputError : null]}
+          style={styles.input}
           placeholder="Tax"
           keyboardType="numeric"
           value={tax}
           onChangeText={handleTaxChange}
+          error={taxError.length > 1}
         />
-        {taxError ? <Text style={styles.errorText}>{taxError}</Text> : null}
 
-        <TouchableOpacity
+        <Button onPress={handleCreateInvoice}
+          mode="contained"
           style={[styles.button, loading ? styles.buttonDisabled : null]}
-          onPress={handleCreateInvoice}
           disabled={loading}
           accessibilityState={{ disabled: loading }}
         >
-          <Text style={styles.buttonText}>
-            {loading ? 'Creating...' : 'Create Invoice'}
-          </Text>
-        </TouchableOpacity>
+          {loading ? 'Creating...' : 'Create Invoice'}
+        </Button>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -299,34 +298,19 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '100%',
-    padding: 8,
+    padding: 6,
     marginVertical: 8,
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 4,
   },
   button: {
     width: '100%',
     backgroundColor: '#007AFF',
-    padding: 15,
+    padding: 8,
     borderRadius: 8,
     marginTop: 10,
     alignItems: 'center',
-  },
-  buttonText: {
     color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  inputError: {
-    borderColor: 'red',
-  },
-  errorText: {
-    color: 'red',
-    fontSize: 12,
-    marginTop: -4,
-    marginBottom: 4,
-    alignSelf: 'flex-start',
   },
   buttonDisabled: {
     opacity: 0.5,

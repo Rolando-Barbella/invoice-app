@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import InvoiceModals from '../InvoiceFetcher/InvoiceModals';
+import InvoiceModals from '../InvoiceList/InvoiceModals';
 
 describe('InvoiceModals', () => {
   const defaultProps = {

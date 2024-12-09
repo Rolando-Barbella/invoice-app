@@ -21,7 +21,7 @@ interface Invoice {
   };
 }
 
-const InvoiceFetcher = () => {
+const InvoiceList = () => {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -180,4 +180,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default InvoiceFetcher;
+export default InvoiceList;

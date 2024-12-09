@@ -29,7 +29,7 @@ npm test
 - It would be nice to have a way of filtering invoices by invoice number and by date as well
 - When adding invoices, specifically the date fields, the screen could have a calendar component that helps the user select and add dates more "easily"
 - The form validaton is somehow "basic", could be better
-- An invoice details screen that shows all details could be added to offer full data information to the user
+- An invoice details screen that shows all details could be added to offer full data or a drop down menu in the card
 - More test coverage could be added
 - Sure it can be styled to look more attractive and moderm
 
