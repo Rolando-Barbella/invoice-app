@@ -6,7 +6,7 @@ import InvoiceModals from './InvoiceModals';
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 
-interface Invoice {
+export interface Invoice {
   id: number;
   customer_id: number | null;
   finalized: boolean;

@@ -1,12 +1,14 @@
 import { renderHook, act } from '@testing-library/react'
 import { ApiProvider, useCustomer, useFinalizeInvoice, useDeleteInvoice, useCreateInvoice } from './index'
+import {Invoice} from '../screens/InvoiceList'
 import React from 'react'
 
+
 interface Client {
-  put: (url: string, data?: any) => Promise<any>;
-  delete: (url: string) => Promise<any>;
-  getInvoices: () => Promise<any>;
-  post: (url: string, data?: any) => Promise<any>;
+  put: (url: string, data?: any) => Promise<Invoice>;
+  delete: (url: string) => Promise<Invoice>;
+  getInvoices: () => Promise<Invoice>;
+  post: (url: string, data?: any) => Promise<Invoice>;
 }
 
 const mockClient = {

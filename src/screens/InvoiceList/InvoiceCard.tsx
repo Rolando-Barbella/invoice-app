@@ -1,24 +1,10 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-
-interface Invoice {
-  id: number;
-  customer_id: number | null;
-  finalized: boolean;
-  paid: boolean;
-  date: string | null;
-  deadline: string | null;
-  total: string | null;
-  tax: string | null;
-  customer?: {
-    first_name: string;
-    last_name: string;
-  };
-}
+import { View, Text, TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native';
+import {Invoice} from '../InvoiceList'
 
 interface InvoiceCardProps {
   invoice: Invoice;
-  onMenuPress: (invoice: Invoice, event: any) => void;
+  onMenuPress: (invoice: Invoice, event: GestureResponderEvent) => void;
 }
 
 const InvoiceCard = ({ invoice, onMenuPress }: InvoiceCardProps) => {
