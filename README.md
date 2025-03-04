@@ -1,7 +1,12 @@
 # Invoices App
 
-A mobile app that shows, updates and deletes invoices
+A mobile app built with React Native, Expo and Tamagui UI that shows, updates, and deletes invoices
 
+<p align="center">
+  <img src="https://reactnative.dev/img/header_logo.svg" alt="React JS" width="60"/>
+  <img src="https://cdn.brandfetch.io/idzGRYC3u5/w/400/h/400/theme/dark/icon.jpeg?c=1bxid64Mup7aczewSAYMX&t=1667740799142" alt="Expo" width="60"/>
+  <img src="https://cdn.brandfetch.io/idsSceG8fK/w/400/h/400/theme/dark/icon.jpeg?c=1bxid64Mup7aczewSAYMX&t=1668829260323" alt="Supabase" width="80"/>
+</p>
 
 ### Getting started
 
